@@ -1,13 +1,13 @@
-%-----NLMS fix f=10, and diff SNR=25, 15, 5-----%
-clc; close all ;
-% Parameter definitions
+%-----NLMS fix SNR=15, and diff frequency = 1, 10, 100-----%
+clc; close all ; 
+% Parameter definitions 
 fs = 1000;         % Sampling frequency
 t = 0:1/fs:1-1/fs; % Time vector
-f = 10;             % Frequency of the sine wave
+f = 1;             % Frequency of the sine wave
 
 %A = 1.4226
-%A = 4.4987;
-A = 14.2262;
+A = 4.4987;
+%A = 14.2262;
 
 A_Noise = 0.8 ;
 z = 1 ;
@@ -36,11 +36,11 @@ N = length(noisy_signal);
 w = zeros(1, M);   % Filter coefficients initialized
 e = zeros(1, N);   % Error signal
 output = zeros(1, N);  % Filter output
-muj = 0.0001 :0.0001:0.0999;
-y_errtoclean = zeros(1,999);
+muj = 0.0001 :0.0001:0.9999;
+y_errtoclean = zeros(1,9999);
 j = 1
 % NLMS algorithm
-while j<1000
+while j<10000
     for n = M:N
         % Take the last M samples of the current time
         x = noisy_signal(n:-1:n-M+1);
