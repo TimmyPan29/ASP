@@ -22,7 +22,7 @@ end
 noise = A_Noise * randn(size(t));
 noisy_signal = clean_signal + noise;
 temp1 = mean(clean_signal.^2);
-temp2 = mean(A_Noise.^2); 
+temp2 = mean(noise.^2); 
 SNR = 10*log10(temp1/temp2)
 % LMS algorithm parameters
 mu = 0.0001;         % Step size (learning rate)

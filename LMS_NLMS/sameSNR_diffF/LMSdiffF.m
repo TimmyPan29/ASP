@@ -22,7 +22,7 @@ end
 noise = A_Noise * randn(size(t));
 noisy_signal = clean_signal + noise;
 temp1 = mean(clean_signal.^2);
-temp2 = mean(A_Noise.^2); 
+temp2 = mean(noise.^2); 
 SNR = 10*log10(temp1/temp2)
 % LMS algorithm parameters
 mu = 0.0001;         % Step size (learning rate)
@@ -38,28 +38,9 @@ muj = 0.0001 :0.0001:0.9999;
 y_errtoclean = zeros(1,9999);
 j = 1
 % % LMS algorithm
-while j < 10000
-    for n = M:N
-        % Take the last M samples of the current time
-        x = noisy_signal(n:-1:n-M+1);
-
-        % Filter output
-        output(n) = w * x';
-
-        % Error calculation
-        e(n) = clean_signal(n) - output(n);
-
-        % Coefficients update
-        w = w + 2 * muj(j) * e(n) * x;
-    end
-    temp3 = mean(e(33:end).^2) ;
-    temp4 = mean(clean_signal(33:end).^2) ;
-    err_clean_dB = 10*log10(temp3/temp4) ;
-    y_errtoclean(j) = err_clean_dB ;
-    j = j + 1 ;
-end
-lms_SNR15f10000mu0d0001 = y_errtoclean;
-% for n = M:N
+% %-----one-----%
+% while j < 10000
+%     for n = M:N
 %         % Take the last M samples of the current time
 %         x = noisy_signal(n:-1:n-M+1);
 % 
@@ -70,43 +51,65 @@ lms_SNR15f10000mu0d0001 = y_errtoclean;
 %         e(n) = clean_signal(n) - output(n);
 % 
 %         % Coefficients update
-%         w = w + 2 * mu * e(n) * x;
+%         w = w + 2 * muj(j) * e(n) * x;
+%     end
+%     temp3 = mean(e(33:end).^2) ;
+%     temp4 = mean(clean_signal(33:end).^2) ;
+%     err_clean_dB = 10*log10(temp3/temp4) ;
+%     y_errtoclean(j) = err_clean_dB ;
+%     j = j + 1 ;
 % end
-% temp3 = mean(e(33:end).^2) ;
-% temp4 = mean(clean_signal(33:end).^2) ;
-% err_clean_dB = 10*log10(temp3/temp4) ;
+% lms_SNR15f10000mu0d0001 = y_errtoclean;
+
+%-----two-----%
+for n = M:N
+        % Take the last M samples of the current time
+        x = noisy_signal(n:-1:n-M+1);
+
+        % Filter output
+        output(n) = w * x';
+
+        % Error calculation
+        e(n) = clean_signal(n) - output(n);
+
+        % Coefficients update
+        w = w + 2 * mu * e(n) * x;
+end
+temp3 = mean(e(33:end).^2) ;
+temp4 = mean(clean_signal(33:end).^2) ;
+err_clean_dB = 10*log10(temp3/temp4) ;
 
 
 % Plotting the results
-% folderPath = '/Users/timmy29/desktop/asp/LMS_NLMS'; 
-% %folderPath = 'C:\Users\f1406\Downloads\asp_matlab\LMS_NLMS\SNR相同_特性相同_步數敏感度'; % Windows样式的路径
-% baseFileName = 'lms_SNR25f10one_mu'; % 基本文件名
-% jpgFileName = fullfile(folderPath, sprintf('%s%s.jpg', baseFileName,strmu));
-% figure;
-% subplot(3,1,1);
-% plot(t, clean_signal);
-% title('Clean Signal');
-% xlabel('Time (s)');
-% ylabel('signal (V)');
-% 
-% subplot(3,1,2);
-% plot(t, noisy_signal);
-% title('Noisy Signal');
-% xlabel('Time (s)');
-% ylabel('signal (V)');
-% 
-% subplot(3,1,3);
-% plot(t, output);
-% title('Output Signal using LMS');
-% xlabel('Time (s)');
-% ylabel('signal (V)');
-% % saveas(gcf, jpgFileName);
-% % Display the error plot
-% figure;
-% plot(t, e);
-% title('Error Signal');
-% xlabel('Time (s)');
-% ylabel('signal (V)');
-% baseFileName = 'lms_SNR25f10two_mu'; % 基本文件名
-% jpgFileName = fullfile(folderPath, sprintf('%s%s.jpg', baseFileName,strmu));
-% % saveas(gcf, jpgFileName);
+folderPath = '/Users/timmy29/desktop/asp/LMS_NLMS'; 
+%folderPath = 'C:\Users\f1406\Downloads\asp_matlab\LMS_NLMS\SNR相同_特性相同_步數敏感度'; % Windows样式的路径
+baseFileName = 'lms_SNR25f10one_mu'; % 基本文件名
+jpgFileName = fullfile(folderPath, sprintf('%s%s.jpg', baseFileName,strmu));
+figure;
+subplot(3,1,1);
+plot(t, clean_signal);
+title('Clean Signal');
+xlabel('Time (s)');
+ylabel('signal (V)');
+
+subplot(3,1,2);
+plot(t, noisy_signal);
+title('Noisy Signal');
+xlabel('Time (s)');
+ylabel('signal (V)');
+
+subplot(3,1,3);
+plot(t, output);
+title('Output Signal using LMS');
+xlabel('Time (s)');
+ylabel('signal (V)');
+% saveas(gcf, jpgFileName);
+% Display the error plot
+figure;
+plot(t, e);
+title('Error Signal');
+xlabel('Time (s)');
+ylabel('signal (V)');
+baseFileName = 'lms_SNR25f10two_mu'; % 基本文件名
+jpgFileName = fullfile(folderPath, sprintf('%s%s.jpg', baseFileName,strmu));
+% saveas(gcf, jpgFileName);

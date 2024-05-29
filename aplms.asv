@@ -15,8 +15,6 @@ D = clean_signal ;
 %randn mean:0 sigma:1
 n = numel(D);
 noise = 0.8*randn(1,n);
-temp1 = mean(noise.^2) ;
-temp2 = mean()
 A = D(1:n) + noise
 M = 32;
 wi = zeros(1,M);
