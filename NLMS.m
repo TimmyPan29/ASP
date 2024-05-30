@@ -4,9 +4,9 @@ clc; close all ;
 fs = 1000;         % Sampling frequency
 t = 0:1/fs:1-1/fs; % Time vector
 
-f = 10000;             % Frequency of the sine wave
-flag = 2;
-flagF = false ;
+f = 100;             % Frequency of the sine wave
+flag = 3;
+flagF = true ;
 
 if(flag==1)
     A = 1.4226; SNRstrNLMS = 'NLMS SNR=5' ;
@@ -16,7 +16,7 @@ else
     A = 14.2262; SNRstrNLMS = 'NLMS SNR=25' ;
 end
 A_Noise = 0.8 ;
-z = 1 ;
+z = 5 ;
 clean_signal = zeros(size(t));
 % Generate a clean sine wave signal
 %clean_signal = 2*sin(2 * pi * 2*f * t)+2*sin(2 * pi * 3*f * t)+2*sin(2 * pi * 5*f * t)+2*sin(2 * pi * 7*f * t);
@@ -68,17 +68,19 @@ while j<10000
     y_errtoclean(j) = err_clean_dB ;
     j = j + 1 ;
 end
-if(flag==1)
-    nlms_SNR5f10mu0d0001 = y_errtoclean;
-elseif(flag==2)
-    nlms_SNR15f10mu0d0001 = y_errtoclean;
-else
-    nlms_SNR25f10mu0d0001 = y_errtoclean;
+if(flag==1 && f==100 && flagF)
+    nlms_SNR5f100mu0d0001 = y_errtoclean;
+elseif(flag==2 && f==100 && flagF)
+    nlms_SNR15f100mu0d0001 = y_errtoclean;
+elseif(flag==3 && f==100 && flagF)
+    nlms_SNR25f100mu0d0001 = y_errtoclean;
 end
 if(flag==2 && flagF==false && f==1)
     nlms_SNR15f1mu0d0001 = y_errtoclean ;
 elseif(flag==2 && flagF==false && f==100)
     nlms_SNR15f100mu0d0001 = y_errtoclean ;
+elseif(flag==2 && flagF==false && f==1000)
+    nlms_SNR15f1000mu0d0001 = y_errtoclean ;
 elseif(flag==2 && flagF==false && f==10000)
     nlms_SNR15f10000mu0d0001 = y_errtoclean ;
 end

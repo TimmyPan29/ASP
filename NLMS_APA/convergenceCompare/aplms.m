@@ -3,11 +3,11 @@ clc; close all ;
 fs = 1000;         % Sampling frequency
 t = 0:1/fs:1-1/fs; % Time vector
 A_Noise = 0.8 ;
-z = 1 ;
+z = 5 ;
 
-f = 10000 ;             % Frequency of the sine wave
-flag = 2 ;
-flagF = false ;
+f = 100 ;             % Frequency of the sine wave
+flag = 3 ;
+flagF = true ;
 
 if(flag==1)
     A = 1.4226; SNRstrAPA = 'APA SNR=5' ;
@@ -116,17 +116,19 @@ while k<10000
     y_errtoclean(k) = ErrtoCleanSignal ;
     k = k+1 ;
 end
-if(flag==1 && flagF)
-    apa_SNR5f10mu0d0001 = y_errtoclean ;
-elseif(flag==2 && flagF)
-    apa_SNR15f10mu0d0001 = y_errtoclean ;
-elseif(flag==3 && flagF)
-    apa_SNR25f10mu0d0001 = y_errtoclean ;
+if(flag==1 && flagF && f==100)
+    apa_SNR5f100mu0d0001 = y_errtoclean ;
+elseif(flag==2 && flagF && f==100)
+    apa_SNR15f100mu0d0001 = y_errtoclean ;
+elseif(flag==3 && flagF && f==100)
+    apa_SNR25f100mu0d0001 = y_errtoclean ;
 end
 if(flag==2 && flagF==false && f==1)
     apa_SNR15f1mu0d0001 = y_errtoclean ;
 elseif(flag==2 && flagF==false && f==100)
     apa_SNR15f100mu0d0001 = y_errtoclean ;
+elseif(flag==2 && flagF==false && f==1000)
+    apa_SNR15f1000mu0d0001 = y_errtoclean ;
 elseif(flag==2 && flagF==false && f==10000)
     apa_SNR15f10000mu0d0001 = y_errtoclean ;
 end
