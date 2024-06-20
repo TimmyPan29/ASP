@@ -2,15 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # AR model parameters
-a1, a2 = -0.1950, 0.95
+a1, a2 = -0.9750, 0.95
 
 # Simulation settings
 N = 1000 # Number of samples
 mu = 0.3  # Learning rate
 sigma_u = 1  # Noise standard deviation
-J_min = 0.0965
-lambda1 = 1.1
-lambda2 = 0.9
+J_min = 0.0731
+lambda1 = 1.5
+lambda2 = 0.5
 # Initialize the AR process
 v1 = np.zeros(N)
 v2 = np.zeros(N)
@@ -27,7 +27,7 @@ def plot_ellipse(lambda1, lambda2, delta_J, color='black'):
     v1 = r * np.cos(theta)
     v2 = r * np.sin(theta)
     plt.plot(v1, v2, color=color, linestyle='dashed', linewidth=1)
-increments = [0.1,0.3, 0.5, 0.9]  # 不同的能量水平增量
+increments = [0.6,0.7, 0.8, 0.9]  # 不同的能量水平增量
 
 # Plotting the trajectory of the error vectors
 plt.figure(figsize=(10, 6))
