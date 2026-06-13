@@ -56,3 +56,4 @@ def quadratic_trajectory(
     modes = error * (1.0 - step_size * spectrum) ** powers
     costs = minimum_cost + np.sum(spectrum * modes**2, axis=1)
     return modes, costs
+
